@@ -7,14 +7,15 @@
  
 @File    :   attention_keras.py
  
-@Time    :   2019-06-25 21:50
+@Time    :   2019-09-24 09:56
  
 @Desc    :
  
 '''
 
 from keras import backend as K
-from keras.engine.topology import Layer
+from keras.layers import Layer
+
 
 class Position_Embedding(Layer):
     def __init__(self, size=None, mode='sum', **kwargs):
@@ -33,19 +34,14 @@ class Position_Embedding(Layer):
     def call(self, x):
         if (self.size == None) or (self.mode == 'sum'):
             self.size = int(x.shape[-1])
-        print('size:', self.size)
-        batch_size, seq_len = K.shape(x)[0], K.shape(x)[1]
-        print(batch_size, seq_len)
+        # batch_size, seq_len = K.shape(x)[0], K.shape(x)[1]
         position_j = 1. / K.pow(10000., 2 * K.arange(self.size / 2, dtype='float32') / self.size)
-        print('position_j1:', position_j.shape)
         position_j = K.expand_dims(position_j, 0)
-        print('position_j2:', position_j.shape)
         position_i = K.cumsum(K.ones_like(x[:, :, 0]), 1)-1
-        print('position_i1:', position_i.shape)
         position_i = K.expand_dims(position_i, 2)
-        print('position_i2:', position_i.shape)
+
         position_ij = K.dot(position_i, position_j)
-        print('position_ij:', position_ij.shape)
+
         position_ij = K.concatenate(
             [K.cos(position_ij), K.sin(position_ij)], 2)
         if self.mode == 'sum':
