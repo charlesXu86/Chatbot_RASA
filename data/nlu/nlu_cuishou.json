@@ -1,0 +1,159 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "intent": "will_pay",
+        "entities": [
+          {
+            "start": 7,
+            "end": 9,
+            "value": "晚上",
+            "entity": "time"
+          }
+        ],
+        "text": "我现在在外面，晚上回去还"
+      },
+      {
+        "intent": "will_pay",
+        "entities": [
+          {
+            "start": 1,
+            "end": 3,
+            "value": "中午",
+            "entity": "time"
+          }
+        ],
+        "text": "我中午处理一下"
+      },
+      {
+        "intent": "yes",
+        "entities": [
+        ],
+        "text": "嗯嗯，好的"
+      },
+      {
+        "intent": "yes",
+        "entities": [
+        ],
+        "text": "好的，好的，我知道了"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "您好"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "Hello"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "hello"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "Hi"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "hi"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "喂"
+      },
+      {
+        "intent": "greet",
+        "entities": [
+        ],
+        "text": "在么"
+      },
+      {
+        "intent": "goodbye",
+        "entities": [
+        ],
+        "text": "拜拜"
+      },
+      {
+        "intent": "goodbye",
+        "entities": [
+        ],
+        "text": "再见"
+      },
+      {
+        "intent": "goodbye",
+        "entities": [
+        ],
+        "text": "拜"
+      },
+      {
+        "intent": "goodbye",
+        "entities": [
+        ],
+        "text": "退出"
+      },
+      {
+        "intent": "goodbye",
+        "entities": [
+        ],
+        "text": "结束"
+      }
+    ],
+    "regex_features": [],
+    "entity_synonyms": [
+      {
+        "value": "下个星期一",
+        "synonyms": [
+          "下星期一"
+        ]
+      },
+      {
+        "value": "明天",
+        "synonyms": [
+          "明日"
+        ]
+      },
+      {
+        "value": "今天",
+        "synonyms": [
+          "早上"
+        ]
+      },
+      {
+        "value": "今天",
+        "synonyms": [
+          "中午"
+        ]
+      },
+      {
+        "value": "今天",
+        "synonyms": [
+          "晚上"
+        ]
+      },
+      {
+        "value": "今天",
+        "synonyms": [
+          "傍晚"
+        ]
+      },
+      {
+        "value": "今天",
+        "synonyms": [
+          "今日"
+        ]
+      }
+    ]
+  }
+}
