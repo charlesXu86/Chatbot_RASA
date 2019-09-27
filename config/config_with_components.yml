@@ -1,41 +1,53 @@
 language: "zh"
 
 pipeline:
-- name: "JiebaTokenizer"
-- name: "CRFEntityExtractor"
+#- name: "JiebaTokenizer"
+#- name: "CRFEntityExtractor"
 
-- name: "rasa_nlu_gao.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
-  part_of_speech: ["nr"]
+
+# ner
+#- name: "rasa_nlu_gao.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+- name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
+  part_of_speech: ["time", "loc", "org", "per", "money"]
 
   # 自己添加
-  model: "data/total_word_feature_extractor.dat"
+  model: "ext_data/total_word_feature_extractor.dat"
 
-- name: "rasa_nlu_gao.featurizers.bert_vectors_featurizer.BertVectorsFeaturizer"
-  ip: '127.0.0.1'
+# Word Embedding
+- name: "chatbot_nlu.featurizers.bert_vectors_featurizer.BertVectorsFeaturizer"
+  ip: "172.18.103.43"
   port: 5555
   port_out: 5556
   show_server_config: True
   timeout: 10000
   check_version: False
-- name: "rasa_nlu_gao.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
 
-policies:
-#  - name: "policy.attention_policy.AttentionPolicy"
-  - name: KerasPolicy
-    epochs: 100
+# intent
+- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
+
+
+# sentiment
+
+
+policies:     # 对话策略
+  - name: "policy.attention_policy.AttentionPolicy"
+#  - name: KerasPolicy
+    epochs: 5
     featurizer:
+#    - name: FullDialogueTrackerFeaturizer
     - name: MaxHistoryTrackerFeaturizer
-      max_history: 3
+      max_history: 5    # This controlls how mach dialogue history the model looks at to decide which action to take
       state_featurizer:
         - name: LabelTokenizerSingleStateFeaturizer
-    tf_config: {
+    config_proto: {
       "inter_op_parallelism_threads": 0,
       "intra_op_parallelism_threads": 0,
-      "gpu_options": {"allow_growth": True}
+      "allow_growth": True,
+      "visible_device_list": "0,1"
     }
 
   - name: FallbackPolicy
-    fallback_action_name: 'action_default_fallback'
+    fallback_action_name: "action_default_fallback"
     nlu_threshold: 0.5
     core_threshold: 0.3
   - name: MemoizationPolicy
