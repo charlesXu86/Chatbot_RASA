@@ -1,13 +1,43 @@
-from py2neo import Graph, NodeMatcher
-from rasa.core.actions import Action
-from rasa_core_sdk.events import SlotSet
+# -*- coding: utf-8 -*-
+
+'''
+@Author  :   Xu
+
+@Software:   PyCharm
+
+@File    :   actions.py
+
+@Time    :   2019-09-10 16:31
+
+@Desc    :   1、连接neo4j查询, 当rasa无法回复的时候到图数据库寻找答案
+             2、重写name和run
+
+'''
+
 import requests
 import json
 
-graph = Graph("http://neo4j:admin@localhost:7474")
+from rasa.core.actions import Action
+from rasa_sdk.events import SlotSet
+from py2neo import Graph, NodeMatcher
+
+
+graph = Graph("http://172.18.103.43:7474")
+
 selector = NodeMatcher(graph)
 
-# MATCH path = (n)-[r]->(m) where n.案件号 =~ '.*浙1125刑初148号.*' RETURN path
+
+class ActionAskProblem(Action):
+    '''
+    询问问题
+    '''
+    def name(self):
+        return 'action_ask_problem'
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message('请问您为什么要退车呢？')
+        return [SlotSet('car', '奥迪')]
+
 def retrieveDataFromNeo4j(cyber):
     url = 'http://neo4j:admin@localhost:7474/db/data/transaction/commit'
     body = {"statements":[{ "statement":cyber, "resultDataContents":["graph"]}]}
@@ -16,9 +46,9 @@ def retrieveDataFromNeo4j(cyber):
     return response.text
 
 
-class ViewCaseDefendants(Action):
+class ViewCuishouCase(Action):
     def name(self):
-        return 'action_view_case_defendants'
+        return 'action_view_cuishou_case'
 
     def run(self, dispatcher, tracker, domain):
         case = tracker.get_slot('case')
@@ -104,9 +134,12 @@ class ViewDefendantData(Action):
         return [SlotSet('defendant', defendant)]
 
 
-class ViewCaseDetail(Action):
+class ViewDataDetail(Action):
+    '''
+    查询数据详情
+    '''
     def name(self):
-        return 'action_view_case_detail'
+        return 'action_view_data_detail'
 
     def run(self, dispatcher, tracker, domain):
         case = tracker.get_slot('case')
