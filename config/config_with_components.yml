@@ -4,9 +4,8 @@ pipeline:
 #- name: "JiebaTokenizer"
 #- name: "CRFEntityExtractor"
 
-
 # ner
-#- name: "rasa_nlu_gao.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+#- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
 - name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
   part_of_speech: ["time", "loc", "org", "per", "money"]
 
@@ -23,16 +22,17 @@ pipeline:
   check_version: False
 
 # intent
+#- name: "rasa_nlu_gao.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
 - name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
 
 
-# sentiment
-
+# Sentiment
+#- name: "chatot_nlu.classifiers.embedding_bert_sentiment_classifier.EmbeddingBertSentimentClassifier"
 
 policies:     # 对话策略
-  - name: "policy.attention_policy.AttentionPolicy"
+  - name: "chatbot_dm.policy.attention_policy.AttentionPolicy"
 #  - name: KerasPolicy
-    epochs: 5
+    epochs: 100
     featurizer:
 #    - name: FullDialogueTrackerFeaturizer
     - name: MaxHistoryTrackerFeaturizer
