@@ -16,28 +16,18 @@
 from rasa.core.channels.socketio import SocketIOInput
 from rasa.core.agent import Agent
 import rasa
-from rasa.utils.endpoints import EndpointConfig
+import pathlib
+import os
+
+basedir = str(pathlib.Path(os.path.abspath(__file__)).parent)
+model = basedir + "/models"
 
 
-action_endpoint = EndpointConfig(url="http://localhost:5055")
-# load your trained agent
-agent = Agent.load('models',
-                   action_endpoint=action_endpoint)
-#
-input_channel = SocketIOInput(
-	# event name for messages sent from the user
-	user_message_evt="user_uttered",
-	# event name for messages sent from the bot
-	bot_message_evt="bot_uttered",
-	# socket.io namespace to use for the messages
-	namespace=None
-)
-
-
-model = "models"
+# model = "/home/xsq/nlp_code/Chatbot_RASA/models"
 endpoints = "config/endpoints.yml"
-credentials = "credentials.yml"
+credentials = "config/credentials.yml"
 #
 ss = rasa.run(model=model,
 			  endpoints=endpoints,
-			  credentials=credentials)
+			  credentials=credentials
+			  )
