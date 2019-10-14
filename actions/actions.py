@@ -17,8 +17,12 @@
 import requests
 import json
 
-from rasa.core.actions import Action
+from typing import Any, Text, Dict, List
+
+from rasa_sdk import Action
 from rasa_sdk.events import SlotSet
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk import Tracker
 from py2neo import Graph, NodeMatcher
 
 
@@ -31,144 +35,35 @@ class ActionAskProblem(Action):
     '''
     询问问题
     '''
-    def name(self):
-        return 'action_ask_problem'
+    def name(self) -> Text:
+        return "action_ask_problem"
 
-    def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message('请问您为什么要退车呢？')
-        return [SlotSet('car', '奥迪')]
+    def run(self,
+            dispatcher: CollectingDispatcher,   # Send messages back to user
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # KB-QA
+        # car = tracker.get_slot('car')
+        # result = list(selector.match())   # 这里查询neo4j
+        result = ''
 
-def retrieveDataFromNeo4j(cyber):
-    url = 'http://neo4j:admin@localhost:7474/db/data/transaction/commit'
-    body = {"statements":[{ "statement":cyber, "resultDataContents":["graph"]}]}
-    headers = {'content-type': "application/json"}
-    response = requests.post(url, data = json.dumps(body), headers = headers)
-    return response.text
+        dispatcher.utter_message('这里查询知识库')
+        return [SlotSet('org', result if result is not None else [])]
 
-
-class ViewCuishouCase(Action):
-    def name(self):
-        return 'action_view_cuishou_case'
-
-    def run(self, dispatcher, tracker, domain):
-        case = tracker.get_slot('case')
-        if(case==None):
-            dispatcher.utter_message("服务器开小差了")
-            return []
-        all_defendants = ""
-        a = list(selector.match("被告人", 案件号__contains=case))
-        for _ in a:
-            if (a[a.__len__() - 1] == _):
-                all_defendants = all_defendants + _['name'] + "."
-            else:
-                all_defendants = all_defendants + _['name'] + ','
-        response = "{}案件, 有涉案人员:{}".format(case, all_defendants)
-        dispatcher.utter_message(response)
-        return [SlotSet('case', case)]
-
-
-class ViewCaseDefendantsNum(Action):
-    def name(self):
-        return 'action_view_case_defendants_num'
-
-    def run(self, dispatcher, tracker, domain):
-        case = tracker.get_slot('case')
-        if(case==None):
-            dispatcher.utter_message("服务器开小差了")
-            return []
-        n = list(selector.match("被告人", 案件号__contains=case)).__len__()
-
-        if(n == 0):
-            response = "没有这个案件, 查证后再说吧~"
-        else:
-            response = "{}案件共有{}个涉案人员".format(case, n)
-        graph_data = retrieveDataFromNeo4j("MATCH path = (n)-[r]->(m) where n.案件号 =~ '.*{}.*' RETURN path".format(case))
-        # with SocketIO('localhost', 8080) as socketIO:
-        #     socketIO.emit('data', graph_data)
-        dispatcher.utter_message(response)
-        return [SlotSet('case', case)]
-
-
-class ViewDefendantData(Action):
-    def name(self):
-        return 'action_view_defendant_data'
-
-    def run(self, dispatcher, tracker, domain):
-        defendant = tracker.get_slot('defendant')
-        item = tracker.get_slot('item')
-        person = graph.nodes.match("被告人", name=defendant).first()
-        response = "这个系统还够完善, 没有找到{}关于'{}'的信息, 抱歉哦..".format(defendant, item)
-        if(item==None or defendant==None):
-            dispatcher.utter_message("服务器开小差了")
-            return []
-
-        # < id >: 0
-        # name: 张青红出生地: 浙江省云和县出生日期: 1979
-        # 年8月14日性别: 女户籍所在地: 云和县凤凰山街道上前溪100号文化程度: 初中文化案件号: （2017）浙1125刑初148号毒品数量: 31.3
-        # 克民族: 汉族现住址: 丽水市莲都区水阁工业区齐垵村20号2楼职业: 务工
-        if item.find("个人资料") != -1:
-            response = "{},{},{}生,户籍所在:{}, {}程度, 现住{}, 贩毒{}".format(defendant, person['性别'],person['出生日期'], person['户籍所在地'], person['文化程度'], person['现住址'],person['毒品数量'])
-        elif item.find("出生地") != -1:
-            response = "{}的出生地是{}".format(defendant, person['出生地'])
-        elif item.find("生日") != -1:
-            response = "{}的生日是{}".format(defendant, person['出生日期'])
-        elif item.find("性别") != -1:
-            response = "{}的性别是:{}".format(defendant, person['性别'])
-        elif item.find("户籍所在地") != -1:
-            response = "{}的户籍所在地是:{}".format(defendant, person['户籍所在地'])
-        elif item.find("文化程度") != -1:
-            response = "{}的文化程度是:{}".format(defendant, person['文化程度'])
-        elif item.find("贩毒量") != -1:
-            response = "{}的贩毒量是:{}".format(defendant, person['毒品数量'])
-        elif item.find("民族") != -1:
-            response = "{}的民族是:{}".format(defendant, person['民族'])
-        elif item.find("现住址") != -1:
-            response = "{}的现住址是:{}".format(defendant, person['现住址'])
-        elif item.find("职业") != -1:
-            response = "{}的职业是:{}".format(defendant, person['职业'])
-
-        graph_data = retrieveDataFromNeo4j("MATCH path = (n)-[r]->(m) where n.name =~ '.*{}.*' RETURN path".format(defendant))
-        # with SocketIO('localhost', 8080) as socketIO:
-        #     socketIO.emit('data', graph_data)
-        dispatcher.utter_message(response)
-        return [SlotSet('defendant', defendant)]
-
-
-class ViewDataDetail(Action):
+class ActionDefaultFallback(Action):
     '''
-    查询数据详情
+    默认回复
     '''
-    def name(self):
-        return 'action_view_data_detail'
+    def name(self): # type: () -> Text
+        return "action_default_fallback"
 
-    def run(self, dispatcher, tracker, domain):
-        case = tracker.get_slot('case')
-        if(case==None):
-            dispatcher.utter_message("服务器开小差了")
-            return []
-        found = graph.nodes.match("被告人", 案件号__contains=case)
-        n = list(found).__len__()
-        if(n==0):
-            response = "没有找到这个案件, 是不是案件号错了"
-        else:
-            graph_data = retrieveDataFromNeo4j("MATCH path = (n)-[r]->(m) where n.案件号 =~ '.*{}.*' RETURN path".format(case))
-            # with SocketIO('localhost', 8080) as socketIO:
-            #     socketIO.emit('data', graph_data)
-            response = "需要我做点什么?"
-            
-        dispatcher.utter_message(response)
-        return [SlotSet('case',case)]
+    def run(
+        self,
+        dispatcher,  # type: CollectingDispatcher
+        tracker,  # type: Tracker
+        domain,  # type:  Dict[Text, Any]
+    ):  # type: (...) -> List[Dict[Text, Any]]
 
-if __name__ == '__main__':
-    # data = graph.match("购买人")
-    # for rel in data:
-    selector = NodeMatcher(graph)
-    all_defendants = ""
-    a = list(selector.match("被告人", 案件号__endswith="浙1125刑初148号"))
-    for _ in a:
-        if(a[a.__len__()-1] == _):
-            all_defendants = all_defendants + _['name'] + "."
-        else:
-            all_defendants = all_defendants + _['name'] + ','
-
-    print(all_defendants)
+        result = ''
+        dispatcher.utter_message("我不知道您在说什么哟，请换一种方式吧")
+        return [SlotSet('org', result if result is not None else [])]
