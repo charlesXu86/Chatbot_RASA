@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
 
-python ../server.py
+#python ../bot.py
 
-python -m rasa run actions ../actions.py # ../models/core-20190626-162009 -u default/current \
+#python -m rasa run actions ../actions.py # ../models/core-20190626-162009 -u default/current \
       # --port 5002 --credentials ../config/credentials.yml \
       # --cors * --endpoints ../config/endpoints.yml
+
+
+python -m rasa run --endpoints config/endpoints.yml     \
+                   --enable-api --m models/20190930-095814.tar.gz  \
+                   --port
+                   --debug

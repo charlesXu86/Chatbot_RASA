@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-python -m rasa train core -c ../config/config.yml -s ../data/weather_stories.md --domain ../domain/weather_domain.yml --out ../models/weather  # --epochs 500 --nlu_threshold 0.4 --core_threshold 0.4
+
+cd ..
+rasa train --domain domain/cuishou_domain.yml --data data --config config/config_with_components.yml --out models
