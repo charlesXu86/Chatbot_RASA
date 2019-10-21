@@ -5,9 +5,10 @@ pipeline:
 - name: "CRFEntityExtractor"
 
 # ner
-- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+#- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+
 #- name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
-  part_of_speech: ["time", "loc", "org", "per", "money"]
+#  part_of_speech: ["time", "loc", "org", "per", "money"]
 
 
 # Word Embedding
@@ -20,9 +21,9 @@ pipeline:
   check_version: False
 
 # Single intent
-#- name: "rasa_nlu_gao.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
-
-- name: "KeywordIntentClassifier"       # 关键词提取意图
+#- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
+- name: "chatbot_nlu.classifiers.keyword_intent_classifier.KeywordIntentClassifier"
+#- name: "KeywordIntentClassifier"       # 关键词提取意图
 
 # Multi Intent
 #- name: "intent_featurizer_count_vectors"
@@ -55,9 +56,17 @@ policies:     # 对话策略
 
   - name: MappingPolicy       # 处理局部意图情况
 
+
   - name: FallbackPolicy
     fallback_action_name: "action_default_fallback"
-    nlu_threshold: 0.0
-    core_threshold: 0.0
-  - name: MemoizationPolicy
+    nlu_threshold: 0
+    core_threshold: 0
+
+#  - name: TwoStageFallbackPolicy
+#    nlu_threshold: 0.5
+#    core_threshold: 0.5
+#    ambiguity_threshold: 0.1      # highest - second > 0.1
+#    fallback_action_name: "action_default_fallback"
+
+  - name: MemoizationPolicy  # 记忆对话模型训练数据，并且从训练数据中预测next_action， 如果存在则预测为1.0， 否则为0。0
     max_history: 3
