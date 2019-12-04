@@ -506,7 +506,25 @@
 * BRY 
 	- utter_H42
 * other
-	- action_ask_problem
+	- utter_H43
+
+## path 44
+* other
+	- utter_S2
+* KXRQ
+	- utter_E3
+
+## path 45
+* other
+	- utter_S2
+* JTHH OR JS
+	- utter_E2
+
+## path 46
+* other
+	- utter_S2
+* other
+	- utter_E1
 
 ## path_47 
 * ZM
@@ -526,7 +544,7 @@
 * JZBZ
 	- utter_H36
 * other
-	- action_ask_problem
+	- utter_E4
 
 ## path_51
 * ZNJ_DS
@@ -674,4 +692,8 @@
 * NLD OR TDDM
 	- utter_H28
 * other
-	- action_ask_problem
+	- utter_H4
+
+## path_80
+* other
+	- utter_S2

@@ -62,7 +62,6 @@ actions:
   - utter_E4
   - utter_E5
   - utter_E6
-  - action_ask_problem
 entities:
   - loc
   - money
@@ -164,6 +163,12 @@ intents:
   - CLYWT
   - MC_WHY_ZC
   - TBZJ
+  - YXZX
+  - ZNJDS
+
+# 表单形式
+#forms
+#  - yaoyue_form
 
 
 slots:

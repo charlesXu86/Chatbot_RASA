@@ -22,8 +22,8 @@ pipeline:
 
 # Single intent
 #- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
-- name: "chatbot_nlu.classifiers.keyword_intent_classifier.KeywordIntentClassifier"
-#- name: "KeywordIntentClassifier"       # 关键词提取意图
+- name: "chatbot_nlu.classifiers.keyword_intent_classifier.KeywordIntentClassifier"  # 关键词提取意图
+#- name: "KeywordIntentClassifier"
 
 # Multi Intent
 #- name: "intent_featurizer_count_vectors"
@@ -39,7 +39,7 @@ policies:     # 对话策略
 #  - name: "chatbot_dm.policy.attention_policy.AttentionPolicy"
   - name: EmbeddingPolicy
 #  - name: KerasPolicy
-    epochs: 20
+    epochs: 1
     featurizer:
     - name: FullDialogueTrackerFeaturizer
 #    - name: MaxHistoryTrackerFeaturizer
