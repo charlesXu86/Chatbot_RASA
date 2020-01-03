@@ -4,10 +4,10 @@ action_endpoint:
 
 
 # Tracker Store
-tracker_store:
-    type: mongod
-    url: mongodb://172.18.103.43:27017/
-    db: "chatbot"
-    username: ''
-    password: ''
-    auth_source: "cuishou_bot"
+#tracker_store:
+#    type: mongod
+#    url: mongodb://172.18.103.43:27017/
+#    db: "chatbot"
+#    username: ''
+#    password: ''
+#    auth_source: "cuishou_bot"
