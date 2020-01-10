@@ -2,8 +2,8 @@
 ==========================
 
 Chatbot_RASA是一个基于 `RASA <https://rasa.com>`_ 的多轮任务型对话系统，该项目支持不同场景的任务型对话快速接入，具有泛化能力好，多轮对话质量高的特点
-现在RASA的新版本已经支持基于知识库（knowledge base）的问答和检索（retrieve）的问答。我在RASA的基础上做了一些二次开发，比如在nlu阶段引入了**bert**，在policy
-中引入**强化学习**等
+现在RASA的新版本已经支持基于知识库（knowledge base）的问答和检索（retrieve）的问答。我在RASA的基础上做了一些二次开发，比如在nlu阶段引入了 **bert**，在policy
+中引入 **强化学习** 等
 
 
 二、项目架构
@@ -73,7 +73,7 @@ Chatbot_RASA是一个基于 `RASA <https://rasa.com>`_ 的多轮任务型对话�
 ======================
 将Action和对话模型启动后，RASA便可以以REST形式提供服务，为工程调用，或者接入微信公众号、钉钉群等。在这里我要安利一下我的另外一个项目：
 
-**`Chatbot_Help <https://github.com/charlesXu86/Chatbot_Help>`_**
+ **`Chatbot_Help <https://github.com/charlesXu86/Chatbot_Help>`_ **
 
 
 四、Update News
