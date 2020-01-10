@@ -1,0 +1,5 @@
+
+# tensorflow >= 2.0.0 # (should be installed manually)
+rasa==1.4.1
+chatbot_nlu==1.0.2
+time_convert     # 时间提取
