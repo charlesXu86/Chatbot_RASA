@@ -44,7 +44,7 @@ Action - Rasa NLU - Rasa Core - Web Server（Django restful API）
 
 Interactive Learning： # --skip-visualization
     
-    rasa run actions --actions actions& rasa interactive -m models/20191018-175034.tar.gz --endpoints endpoints.yml
+    rasa run actions --actions actions& rasa interactive -m models/20200107-105951.tar.gz --endpoints endpoints.yml
 
 Debug模式
 local: 
@@ -53,7 +53,7 @@ local:
 
 server: 
    
-    rasa run --endpoints config/endpoints.yml --enable-api --m models/20191026-165940.tar.gz --debug
+    rasa run --endpoints config/endpoints.yml --enable-api --m models/20200107-105951.tar.gz --debug
 
 rasa run --enable-api -m models --debug
 

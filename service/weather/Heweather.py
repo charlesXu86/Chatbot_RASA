@@ -16,7 +16,7 @@
 import requests
 import re
 
-KEY = "&key=9dc30f9838b64439805c40d26d727"
+KEY = "&key=9dc30f9838b64439805c40d26d727255"
 CITY = "location=hefei"
 # APIURL = "https://free-api.heweather.com/s6/"
 APIURL = "https://free-api.heweather.net/s6/weather/"
@@ -46,6 +46,7 @@ class HeWeather(object):
         # url = https://free-api.heweather.com/v5/now?city=深圳&key=2d849c62d67a4b9e94607d0f1c744561
         # url = APIURL + KEY + CITY
         cityname = 'location=' + cityname
+        # apitype = "daily_forecast?"
         apitype = "now?"
         url = APIURL + apitype + cityname + KEY
         raw_json = s.get(url).json()
@@ -56,16 +57,11 @@ class HeWeather(object):
         now_now = raw_json["HeWeather6"][0]["now"]            # 返回天气相关信息
         basic_city = now_basic["location"]  # 城市
         now_tmp = now_now["tmp"]  # 实时气温
-        now_cond = now_now["cond"]["txt"]  # 天气描述
-        now_vis = now_now["vis"]  # 能见度
-        now_hum = now_now["hum"]  # 相对湿度
+        now_cond = now_now["cond_txt"]  # 天气描述
         now_fl = now_now["fl"]  # 体感温度
-        now_pcpn = now_now["pcpn"]  # 降雨量
-        now_pres = now_now["pres"]  # 气压
-        now_deg = now_now["wind"]["deg"]  # 风向(360度)
-        now_dir = now_now["wind"]["dir"]  # 风向
-        now_sc = now_now["wind"]["sc"]  # 风力
-        now_spd = now_now["wind"]["spd"]  # 风速(kmph)
+        now_dir = now_now["wind_dir"]  # 风向
+        now_sc = now_now["wind_sc"]  # 风力
+        now_spd = now_now["wind_spd"]  # 风速(kmph)
 
         text = """
                 实时天气:
