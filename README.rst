@@ -65,7 +65,7 @@ Chatbot_RASA是一个基于 `RASA <https://rasa.com>`_ 的多轮任务型对话�
         rasa shell --debug
 
 
-具体的使用说明，可以参考`RASA的官方说明文档 <https://rasa.com/docs/rasa/user-guide/evaluating-models/>`
+具体的使用说明，可以参考`RASA的官方说明文档 <https://rasa.com/docs/rasa/user-guide/evaluating-models/>`_
 
 
 
@@ -73,7 +73,7 @@ Chatbot_RASA是一个基于 `RASA <https://rasa.com>`_ 的多轮任务型对话�
 ======================
 将Action和对话模型启动后，RASA便可以以REST形式提供服务，为工程调用，或者接入微信公众号、钉钉群等。在这里我要安利一下我的另外一个项目：
 
-**`Chatbot_Help <https://github.com/charlesXu86/Chatbot_Help>`**
+**`Chatbot_Help <https://github.com/charlesXu86/Chatbot_Help>`_**
 
 
 四、Update News
