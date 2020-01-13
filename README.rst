@@ -112,7 +112,28 @@
 
 .. code:: python
 
-    a、会话接口
+    a、获取版本接口   GET方法
+        url：http://172.18.103.43:5005/version
+
+    b、获取服务的状态  GET方法
+        url: http://172.18.103.43:5005/status
+
+        {
+            "model_file": "models/20200109-103803.tar.gz",
+            "fingerprint": {
+                "config": "99914b932bd37a50b983c5e7c90ae93b",
+                "core-config": "506804ad89d3db9175b94c8752ca7537",
+                "nlu-config": "45f827a042c25a6605b8a868d95d2299",
+                "domain": 2088252815302883506,
+                "messages": 2270465547977701800,
+                "stories": 1278721284179639569,
+                "trained_at": 1578537378.2885341644,
+                "version": "1.4.1"
+            },
+            "num_active_training_jobs": 0
+        }
+
+    c、会话接口
         url：http://172.18.103.43:5005/webhooks/rest/webhook
 
         参数：{
