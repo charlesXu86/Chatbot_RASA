@@ -81,7 +81,7 @@
 
 2、服务启动后，就可以在postman中对服务进行测试：
 
-    接口列表：
+接口列表：
 
 .. code:: python
 
@@ -107,6 +107,10 @@
     /model/train                                       POST      train
     /model                                             DELETE    unload_model
     /version                                           GET       version
+
+接口说明
+
+.. code:: python
 
     a、会话接口
         url：http://172.18.103.43:5005/webhooks/rest/webhook
