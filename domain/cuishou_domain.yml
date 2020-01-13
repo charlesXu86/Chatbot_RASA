@@ -184,7 +184,12 @@ slots:
     type: text
 templates:
   utter_S1:
-    - text: "你好，这边是弹个车的，您的汽车月租该还啦。"
+    - text: "您好，我是机器人小笨，有什么可以帮您的？您可以根据您的需求选择以下问题"
+    buttons:
+      - title: "Express"
+      payload: "Express"
+      - title: "Weather"
+      payload: "Weather"
   utter_S2:
     - text: "那因为我这边是专门负责提醒您逾期需还款了，如果还有其他具体的问题，您 可以到弹个车app上看一下，再不行可 以找客服4008010010咨询一下哈。 然后这个逾期欠款，对您个人影响还是蛮大的，不管怎么样您还是尽快处理了 好吧。"
   utter_H1:
