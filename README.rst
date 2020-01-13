@@ -60,7 +60,7 @@
 
     2、Debug模式
 
-        rasa run --endpoints config/endpoints.yml --enable-api --m models/20191011-175206.tar.gz --log-file bot.out.log --debug
+        rasa run --endpoints config/endpoints.yml --enable-api --m models/20200113-162316.tar.gz --log-file bot.out.log --debug
 
     3、shell模式
 
@@ -81,12 +81,42 @@
 
 2、服务启动后，就可以在postman中对服务进行测试：
 
-    url：http://172.18.103.43:5005/webhooks/rest/webhook
+    接口列表：
 
-    参数：{
-            "sender": "000001",
-            "message": "你好"
-          }
+.. code:: python
+
+    /conversations/<conversation_id>/messages          POST      add_message
+    /conversations/<conversation_id>/tracker/events    POST      append_events
+    /webhooks/rest                                     GET       custom_webhook_RestInput.health
+    /webhooks/rest/webhook                             POST      custom_webhook_RestInput.receive
+    /model/test/intents                                POST      evaluate_intents
+    /model/test/stories                                POST      evaluate_stories
+    /conversations/<conversation_id>/execute           POST      execute_action
+    /domain                                            GET       get_domain
+    /socket.io                                         GET       handle_request
+    /                                                  GET       hello
+    /model                                             PUT       load_model
+    /model/parse                                       POST      parse
+    /conversations/<conversation_id>/predict           POST      predict
+    /conversations/<conversation_id>/tracker/events    PUT       replace_events
+    /conversations/<conversation_id>/story             GET       retrieve_story
+    /conversations/<conversation_id>/tracker           GET       retrieve_tracker
+    /webhooks/socketio                                 GET       socketio_webhook.health
+    /status                                            GET       status
+    /model/predict                                     POST      tracker_predict
+    /model/train                                       POST      train
+    /model                                             DELETE    unload_model
+    /version                                           GET       version
+
+    a、会话接口
+        url：http://172.18.103.43:5005/webhooks/rest/webhook
+
+        参数：{
+                "sender": "000001",
+                "message": "你好"
+              }
+
+    b、 button接口
 
 
 四、Update News
