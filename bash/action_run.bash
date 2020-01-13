@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd ..
-python -m rasa_sdk.endpoint --actions actions
+nohup python -m rasa_sdk.endpoint --actions actions > action.log 2>&1 &
