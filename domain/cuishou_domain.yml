@@ -185,7 +185,7 @@ slots:
 templates:
   utter_S1:
     - text: "您好，我是机器人小笨，有什么可以帮您的？您可以根据您的需求选择以下问题"
-    buttons:
+      buttons:
       - title: "Express"
         payload: "Express"
       - title: "Weather"
