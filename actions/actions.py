@@ -12,10 +12,13 @@
 @Desc    :   1、连接neo4j查询, 当rasa无法回复的时候到图数据库寻找答案
              2、重写name和run
 
+             3、时间解析
+
 '''
 
 import pathlib
 import os
+import logging
 
 from typing import Any, Text, Dict, List
 
@@ -40,6 +43,8 @@ from rasa_sdk.knowledge_base.actions import ActionQueryKnowledgeBase
 from rasa_sdk.knowledge_base.storage import InMemoryKnowledgeBase
 from rasa_sdk.knowledge_base.storage import KnowledgeBase
 
+from utils.time_utils import get_time_unit    # 时间解析
+
 from py2neo import Graph, NodeMatcher
 
 
@@ -49,6 +54,7 @@ graph = Graph("http://172.18.103.43:7474")
 
 selector = NodeMatcher(graph)
 
+logger = logging.getLogger(__name__)
 
 class ActionAskProblem(Action):
     '''
@@ -91,13 +97,6 @@ class ActionDefaultFallback(Action):
         dispatcher.utter_message("我不知道您在说什么哟，请换一种方式吧")
         return [SlotSet('org', result if result is not None else [])]
 
-# class ActionAskWeather(Action):
-#     '''
-#     天气查询
-#     '''
-#     pass
-
-
 class ActionMyKB(ActionQueryKnowledgeBase):
 
     def __init__(self):
@@ -107,3 +106,31 @@ class ActionMyKB(ActionQueryKnowledgeBase):
         )
 
         super().__init__(knowledge_base)
+
+class ActionReportWeather(Action):
+    '''
+    天气查询
+    '''
+    def name(self) -> Text:
+        return "action_report_weather"
+
+    def run(self, dispatcher: CollectingDispatcher,
+                  tracker: Tracker,
+                  domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        address = tracker.get_slot('address')
+        date_time = tracker.get_slot('date-time')
+
+        if date_time is None:
+            date_time = '今天'
+        date_time_number = get_time_unit(date_time)  # 传入时间关键词，返回归一化的时间
+
+        if isinstance(date_time_number, str):  # parse date_time failed
+            return [SlotSet("matches", "暂不支持查询 {} 的天气".format([address, date_time_number]))]
+        elif date_time_number is None:
+            return [SlotSet("matches", "暂不支持查询 {} 的天气".format([address, date_time]))]
+        else:
+            print('address', address)
+            print('date_time', date_time)
+            print('date_time_number', date_time_number)
+            weather_data = get_text_weather_date(address, date_time, date_time_number)    # 调用天气API
+            return [SlotSet("matches", "{}".format(weather_data))]
