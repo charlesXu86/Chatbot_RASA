@@ -1,0 +1,40 @@
+intents:
+  - greet
+  - goodbye
+  - weather
+  - weather_address_date_time
+  - weather_address
+  - weather_date_time
+entities:
+  - address
+  - date_time
+slots:
+  address:
+    type: text
+  date_time:
+    type: text
+  matches:
+    type: unfeaturized
+templates:
+  utter_greet:
+  - text: "您好，我是小笨，很高兴见到你"
+  utter_working_on_it:
+  - text: "正在查询中，请稍后 ..."
+  utter_goodbye:
+  - text: "再见！"
+  utter_ask_address:
+  - text: "哪里呢？"
+  utter_ask_date_time:
+  - text: "请问您要查什么时候的天气？"
+  utter_report_weather:
+  - text: '{matches}'
+  utter_default:
+  - text: "系统不明白您说的话！"
+actions:
+- utter_greet
+- utter_ask_address
+- utter_ask_date_time
+- utter_working_on_it
+- action_report_weather
+- utter_report_weather
+- utter_goodbye
