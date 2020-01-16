@@ -2,13 +2,14 @@ language: "zh"
 
 pipeline:
 - name: "JiebaTokenizer"
-- name: "CRFEntityExtractor"
+#- name: "chatbot_nlu.extractors.crf_entity_extractor.CRFEntityExtractor"
 
 # ner
-#- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+#  part_of_speech: ["address", "name", "organization", "position", "time", "goverment", "book", "scene", "movie", "company"]
+  part_of_speech: ["nr"]
 
-#- name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
-#  part_of_speech: ["time", "loc", "org", "per", "money"]
+- name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
 
 
 # Word Embedding
@@ -22,9 +23,9 @@ pipeline:
   check_version: False
 
 # Single intent
-#- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
-- name: "chatbot_nlu.classifiers.keyword_intent_classifier.KeywordIntentClassifier"  # 关键词提取意图
-#- name: "KeywordIntentClassifier"
+- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
+#- name: "chatbot_nlu.classifiers.embedding_bert_intent_estimator_classifier.EmbeddingBertIntentEstimatorClassifier"
+#- name: "chatbot_nlu.classifiers.keyword_intent_classifier.KeywordIntentClassifier"  # 关键词提取意图
 
 # Multi Intent
 #- name: "intent_featurizer_count_vectors"
@@ -40,7 +41,7 @@ policies:     # 对话策略 引入强化学习 DDQ -> DQN
 #  - name: "chatbot_dm.policy.attention_policy.AttentionPolicy"
   - name: EmbeddingPolicy
 #  - name: KerasPolicy
-    epochs: 1
+    epochs: 2
     featurizer:
     - name: FullDialogueTrackerFeaturizer
 #    - name: MaxHistoryTrackerFeaturizer
