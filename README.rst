@@ -25,7 +25,23 @@
 
     4、机器人根据Action确定一个response发送给用户，并且此时将当前的状态反馈给Tracker，更新对话状态，循环往复，直到对话结束
 
+3、Intent
 
+4、Slot
+
+    目前，slot提供十一种标签：
+        地址（address）: **省**市**区**街**号，**路，**街道，**村等（如单独出现也标记），注意：地址需要标记完全, 标记到最细。
+        书名（book）: 小说，杂志，习题集，教科书，教辅，地图册，食谱，书店里能买到的一类书籍，包含电子书。
+        公司（company）: **公司，**集团，**银行（央行，中国人民银行除外，二者属于政府机构）, 如：新东方，包含新华网/中国军网等。
+        游戏（game）: 常见的游戏，注意有一些从小说，电视剧改编的游戏，要分析具体场景到底是不是游戏。
+        政府（goverment）: 包括中央行政机关和地方行政机关两级。 中央行政机关有国务院、国务院组成部门（包括各部、委员会、中国人民银行和审计署）、国务院直属机构（如海关、税务、工商、环保总局等），军队等。
+        电影（movie）: 电影，也包括拍的一些在电影院上映的纪录片，如果是根据书名改编成电影，要根据场景上下文着重区分下是电影名字还是书名。
+        姓名（name）: 一般指人名，也包括小说里面的人物，宋江，武松，郭靖，小说里面的人物绰号：及时雨，花和尚，著名人物的别称，通过这个别称能对应到某个具体人物。
+        组织机构（organization）: 篮球队，足球队，乐团，社团等，另外包含小说里面的帮派如：少林寺，丐帮，铁掌帮，武当，峨眉等。
+        职位（position）: 古时候的职称：巡抚，知州，国师等。现代的总经理，记者，总裁，艺术家，收藏家等。
+        景点（scene）: 常见旅游景点如：长沙公园，深圳动物园，海洋馆，植物园，黄河，长江等。
+        时间 (time) : 对话过程中提及的时间相关信息，如：今天，明天、下周、明天上午等
+    同时，该slot可以根据不同场景进行增加或者删减
 
 三、使用说明
 ==============
@@ -36,7 +52,7 @@
 
     pip install chatbot_dm
 
-2、安装bert as service
+2、安装`bert as service`_
 
 3、数据验证
 
@@ -44,7 +60,7 @@
 
 4、Train NLU & Core
 
-    rasa train --domain domain/cuishou_domain.yml --data data --config config/config_with_components.yml --out models
+    rasa train --domain domain/domain.yml --data data --config config/config_with_components.yml --out models
 
 5、Evaluating Models
 
@@ -56,7 +72,9 @@
 
     1、交互模式 Interactive Learning： # --skip-visualization
 
-        rasa run actions --actions actions& rasa interactive -m models/20200107-105951.tar.gz --endpoints endpoints.yml
+        rasa run actions --actions actions&
+
+        rasa interactive -m models/20200107-105951.tar.gz --endpoints endpoints.yml
 
     2、Debug模式
 
@@ -133,7 +151,7 @@
             "num_active_training_jobs": 0
         }
 
-    c、会话接口
+    c、会话接口    POST方法
         url：http://172.18.103.43:5005/webhooks/rest/webhook
 
         参数：{
@@ -158,8 +176,7 @@
 五、Resources
 ======================
 
-.. _`Dingtalk_README`: https://github.com/charlesXu86/Chatbot_Help/blob/master/Dingtalk_README.rst
-
+.. _bert as service: https://github.com/hanxiao/bert-as-service
 
 
 .. |image0| image:: https://github.com/charlesXu86/Chatbot_RASA/blob/master/image/rasa_architecture.png
