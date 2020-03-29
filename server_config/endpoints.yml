@@ -1,6 +1,0 @@
-action_endpoint:
-#  url: http://172.16.19.74:5055/webhook
-  url: http://172.18.103.43:5055/webhook
-nlu:
-#  url: http://172.16.19.74:5000
-  url: http://172.18.103.43:5000
