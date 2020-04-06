@@ -5,7 +5,8 @@ pipeline:
 #- name: "chatbot_nlu.extractors.crf_entity_extractor.CRFEntityExtractor"
 
 # ner
-- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+#- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+- name: "JiebaPsegExtractor"
 #  part_of_speech: ["address", "name", "organization", "position", "time", "goverment", "book", "scene", "movie", "company"]
   part_of_speech: ["nr"]
 
@@ -14,7 +15,7 @@ pipeline:
 
 # Word Embedding
 - name: "chatbot_nlu.featurizers.bert_vectors_featurizer.BertVectorsFeaturizer"
-  ip: "172.18.103.43"
+  ip: "172.18.86.20"
 #  ip: "172.16.19.74"
   port: 5555
   port_out: 5556
@@ -39,7 +40,7 @@ pipeline:
 
 policies:     # 对话策略 引入强化学习 DDQ -> DQN
 #  - name: "chatbot_dm.policy.attention_policy.AttentionPolicy"
-  - name: EmbeddingPolicy
+  - name: TEDPolicy      # rasa 2.0 将 EmbeddingPolicy修改为TEDPolicy
 #  - name: KerasPolicy
     epochs: 2
     featurizer:

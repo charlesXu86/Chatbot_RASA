@@ -9,6 +9,6 @@
 
 
 python -m rasa run --endpoints config/endpoints.yml     \
-                   --enable-api --m models/20190930-095814.tar.gz  \
+                   --enable-api --m models  \
                    --port
                    --debug
