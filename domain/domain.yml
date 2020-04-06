@@ -62,7 +62,7 @@ responses:
   - text: 好的，默认申通，你想换别的快递也可以改的
   utter_modify_delivery:
   - text: 好的，已经改成{delivery}快递了
-  height_weight_form:
+  utter_order_info:
   - text: 您的订单信息如下:身高{height},体重{weight},尺码{size},快递{delivery},欢迎下次再来
   utter_greet:
   - text: 您好,有什么需要帮助的
