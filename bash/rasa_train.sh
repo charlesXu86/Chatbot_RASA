@@ -2,4 +2,4 @@
 
 
 cd ..
-rasa train --domain domain/domain.yml --data data --config config/config_with_components.yml --out models
+rasa train --domain domain/domain.yml --data data --config config/config.yml --out models
