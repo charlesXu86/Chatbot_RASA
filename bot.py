@@ -22,7 +22,7 @@ model = basedir + "/models"
 
 
 endpoints = "config/endpoints.yml"
-credentials = "config/credentials.yml"
+credentials = "credentials.yml"
 #
 ss = rasa.run(model=model,
 			  endpoints=endpoints,

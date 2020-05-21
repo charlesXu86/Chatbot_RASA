@@ -67,3 +67,42 @@
  - utter_child_ask_other_question
 * child_ok
  - utter_goodbye
+## interactive_story_1
+* greet
+    - utter_greet
+* cloth_start
+    - utter_ask_size
+* inform_unknown_size
+    - utter_ask_height_weight
+* inform_height_weight
+    - utter_cloth_recommend
+* inform_choose_delivery
+    - utter_modify_delivery
+* inform_ask_delivery
+    - utter_default_delivery
+* greet
+    - utter_greet
+* goodbye
+    - utter_order_info
+* goodbye
+    - utter_goodbye
+    
+## interactive_story_2
+* greet
+    - utter_greet
+* cloth_start
+    - utter_ask_size
+* inform_unknown_size
+    - utter_ask_height_weight
+* inform_height_weight
+    - utter_cloth_recommend
+* inform_choose_delivery
+    - utter_modify_delivery
+* inform_ask_delivery
+    - utter_default_delivery
+* greet
+    - utter_greet
+* goodbye
+    - utter_order_info
+* greet
+    - utter_goodbye

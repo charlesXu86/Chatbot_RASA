@@ -46,6 +46,9 @@ slots:
     type: unfeaturized
 
 responses:
+  utter_greet:
+  - text: 您好,有什么需要帮助的
+  - text: 您好，我是智能助手小笨，有什么可以帮您的？
   utter_ask_size:
   - text: 有货的亲,请问您要什么型号的？
   - text: 有货的亲,请问您穿多大尺码的？
@@ -56,19 +59,17 @@ responses:
   - text: 好的,请问您身高体重多少呢？可以给您推荐合适的尺码
   - text: 好的,请问您什么体型？
   utter_cloth_recommend:
-  - text: 好的，身高{height}体重{weight}推荐M码的衣服
-  - text: 好的亲，身高{height}体重{weight}推荐M码的
+  - text: 好的，身高180体重75kg推荐XL码的衣服
+  - text: 好的亲，身高180体重75kg推荐XL码的衣服
   utter_default_delivery:
   - text: 好的，默认申通，你想换别的快递也可以改的
+  - text: 我们默认是发申通，你想换其他快递也可以
   utter_modify_delivery:
-  - text: 好的，已经改成{delivery}快递了
+  - text: 好的，已经改成邮政快递了
   utter_order_info:
-  - text: 您的订单信息如下:身高{height},体重{weight},尺码{size},快递{delivery},欢迎下次再来
-  utter_greet:
-  - text: 您好,有什么需要帮助的
+  - text: 您的订单信息如下:身高180,体重75kg,尺码XL,快递邮政,欢迎下次再来
   utter_goodbye:
   - text: 欢迎下次再来
-  - text: Bye
   utter_child_start_ask_age:
   - text: 好的,您的孩子多大了
   utter_child_ask_brand:

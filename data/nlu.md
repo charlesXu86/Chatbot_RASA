@@ -9,6 +9,7 @@
 - 诱惑吗
 - youhuo吗
 - youhuoma
+- 这款衣服有货吗？
 
 ## intent:inform_size
 - 我要[M码](size)的
@@ -28,7 +29,9 @@
 - 我也不清楚自己什么码的
 - 不清楚
 - 不知道什么码的
-
+- 我也不知道穿什么型号的
+- 我也不知道我穿什么码
+- 我也不知道我穿什么型号的
 
 ## intent:inform_height_weight
 - 身高[170](height)体重[140](weight)
@@ -37,25 +40,32 @@
 - 我的体重[130](weight)身高[160](height)
 - 身高[160](height)体重[120](weight)
 - 身高[150](height)体重[100](weight)
-- 身高[170](height)体重[140](weight)
 - 高[170](height)重[140](weight)
 - 高[1米8](height)，重[160斤](weight)
 - 身高[1米8](height)，体重[160斤](weight)
 - [1米8](height)，[160斤](weight)
 - 体重[140](weight)身高[170](height)
 - 体重[120](weight)身高[160](height)
+- 我身高[180](weight),体重[70kg](height)
+- 我身高180，体重75kg
 
 ## intent:inform_ask_delivery
 - 好的，我拍好了，你们发什么快递
 - 你们发什么快递
+- 你们默认是发什么快递
 - 什么快递
 - 哪个快递啊
+- 好的，我看看
+- 好的，我拍下先
 
 ## intent:inform_choose_delivery
 - 用[顺丰](delivery)吧
 - 用[中通](delivery)吧
 - 用[申通](delivery)吧
 - 用[圆通](delivery)吧
+- 换成[邮政](delivery)可以吗？
+- 改成[邮政](delivery)可以吗？
+- 可以换成[邮政](delivery)的吗
 
 ## intent:greet
 - 你好
@@ -65,14 +75,17 @@
 - good morning
 - good evening
 - hey there
+- 好的
 
 ## intent:goodbye
 - 再见
+- 那就这样，再见
 - ok
 - bye
 - goodbye
 - see you around
 - see you later
+- 好的，再见
 
 ## intent:child_ask_child
 - 你好,我想了解一下[纸尿片](child_product)
@@ -87,7 +100,7 @@
 - [5个月](child_age)
 - [五个月](child_age)
 
-## intent: child_include_some:
+## intent:child_include_some:
 - 我要[花王](child_brand)
 - 我要[帮宝适](child_brand)
 - 我要[佳尔乐](child_brand)
@@ -98,7 +111,7 @@
 - [贝奇](child_brand) 或 [花王](child_brand) 吧
 - [贝奇](child_brand) [帮宝适](child_brand) 吧
 
-## intent: child_exclude_some
+## intent:child_exclude_some
 - [国内品牌](child_exclude_brand)不考虑
 - [国外品牌](child_exclude_brand)不考虑
 - 我不想要[国内](child_exclude_brand)的

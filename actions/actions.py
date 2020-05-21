@@ -46,8 +46,15 @@ from rasa_sdk.forms import FormAction
 from rasa_sdk.knowledge_base.storage import KnowledgeBase
 
 from utils.time_utils import get_time_unit  # 时间解析
+# from aip.HeWeather import get_weather
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+from service.action import get_text_weather_date
+from service.normalization import text_to_date
+from service.weather_api import get_weather_api
+
+
+
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 basedir = str(pathlib.Path(os.path.abspath(__file__)).parent.parent)
@@ -186,30 +193,30 @@ class ActionMyKB(ActionQueryKnowledgeBase):
 
 
 class ActionReportWeather(Action):
-    '''
-    天气查询
-    '''
+    def __init__(self):
+        self.weather_api = get_weather_api('seniverse')
+    logger.info('Do ActionReportWeather')
 
     def name(self) -> Text:
         return "action_report_weather"
 
-    def run(self, dispatcher: CollectingDispatcher,
+    def run(self,
+            dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         address = tracker.get_slot('address')
+        logger.info('Slot Address {}'.format(address))
         date_time = tracker.get_slot('date-time')
-
+        logger.info('Slot Date_time {}'.format(date_time))
         if date_time is None:
-            date_time = '今天'
-        date_time_number = get_time_unit(date_time)  # 传入时间关键词，返回归一化的时间
+            msg = "暂不支持查询 {} 的天气".format([address, date_time])
+            return [SlotSet("matches", msg)]
 
-        if isinstance(date_time_number, str):  # parse date_time failed
-            return [SlotSet("matches", "暂不支持查询 {} 的天气".format([address, date_time_number]))]
-        elif date_time_number is None:
-            return [SlotSet("matches", "暂不支持查询 {} 的天气".format([address, date_time]))]
         else:
-            print('address', address)
-            print('date_time', date_time)
-            print('date_time_number', date_time_number)
-            weather_data = get_text_weather_date(address, date_time, date_time_number)  # 调用天气API
+            try:
+                date_object = get_time_unit(date_time)
+                weather_data = self.weather_api.get_text_by_city_and_day(address, date_object)
+            except Exception as e:
+                weather_data = str(e)
+
             return [SlotSet("matches", "{}".format(weather_data))]

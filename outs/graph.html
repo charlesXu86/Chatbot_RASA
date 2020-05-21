@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rasa Core Visualisation</title>
+    <script src="https://dagrejs.github.io/project/dagre-d3/latest/dagre-d3.min.js"></script>
+    <script src="https://dagrejs.github.io/project/dagre/latest/dagre.min.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://dagrejs.github.io/project/graphlib-dot/v0.6.3/graphlib-dot.js"></script>
+</head>
+<body>
+<div id="errormsg" style="color: #b00"></div>
+<svg>
+    <style>
+        .node.invisible > rect {
+            display: none;
+        }
+
+        .node.start > rect {
+            fill: #7f7;
+            rx: 30;
+            ry: 18;
+        }
+
+        .node.end > rect {
+            fill: #f77;
+            rx: 30;
+            ry: 18;
+        }
+
+        .node:not(.active) > rect, .node:not(.active) > .label {
+            opacity: 0.4;
+        }
+
+        .edgePath:not(.active) path {
+            opacity: 0.4;
+        }
+
+        .node.ellipsis > rect {
+            fill: #CCC;
+        }
+
+        .node.intent > rect {
+            fill: #7ff;
+        }
+
+        .node.dashed > rect {
+            stroke-dasharray: 5;
+        }
+
+        text {
+            font-weight: 300;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serf, serif;
+            font-size: 14px;
+            color: #1f1d1d;
+        }
+
+        .node rect {
+            stroke: #444;
+            fill: #fff;
+            stroke-width: 1.5px;
+        }
+
+        .edgePath path {
+            stroke: #333;
+            stroke-width: 1.5px;
+        }
+
+        svg {
+            position: fixed;
+            top: 10px;
+            left: 0;
+            height: 100%;
+            width: 100%
+        }
+    </style>
+    <g></g>
+</svg>
+<script>
+
+  function serveGraph() {
+    let oldInputGraphValue;
+
+    const url = 'visualization.dot';
+    const refreshInterval = 500;
+
+    // trigger a refresh by fetching an updated graph
+    setInterval(function () {
+      fetch(url).then(r => r.text()).then(dot => {
+        document.getElementById('errormsg').innerHTML = '';
+        if (oldInputGraphValue === dot) return;
+
+        oldInputGraphValue = dot;
+        drawGraph(dot);
+      }).catch(err => {
+        document.getElementById('errormsg').innerHTML =
+          'Failed to update plot. (' + err.message + ')';
+      });
+    }, refreshInterval);
+  }
+
+  function drawGraph(graph) {
+    let g = graphlibDot.read(graph);
+    // Set margins, if not present
+    if (!g.graph().hasOwnProperty("marginx") &&
+      !g.graph().hasOwnProperty("marginy")) {
+      g.graph().marginx = 20;
+      g.graph().marginy = 20;
+    }
+    g.graph().transition = function (selection) {
+      return selection.transition().duration(300);
+    };
+    // Render the graph into svg g
+    d3.select("svg g").call(render, g);
+  }
+  // Set up zoom support
+  const svg = d3.select("svg"),
+    inner = d3.select("svg g"),
+    zoom = d3.zoom().on("zoom", function () {
+      inner.attr("transform", d3.event.transform);
+    });
+  svg.call(zoom);
+
+  // Create and configure the renderer
+  const render = dagreD3.render();
+
+  let isClient = false;
+  isClient = true;
+
+  if (isClient) {
+    // Mark all nodes and their edges as active
+    cssRules = document.styleSheets[0].cssRules;
+    cssRules[3].style.opacity = 1;
+    cssRules[4].style.opacity = 1;
+
+    let graph;
+    graph = `digraph  {
+0 [class="start active", fillcolor=green, fontsize=12, label=START, style=filled];
+"-1" [class=end, fillcolor=red, fontsize=12, label=END, style=filled];
+1 [class="", fontsize=12, label=utter_greet];
+2 [class="", fontsize=12, label=utter_ask_size];
+3 [class="", fontsize=12, label=utter_inform_send_delivery];
+4 [class="", fontsize=12, label=utter_default_delivery];
+5 [class="", fontsize=12, label=utter_modify_delivery];
+6 [class="", fontsize=12, label=utter_order_info];
+9 [class="", fontsize=12, label=utter_ask_height_weight];
+10 [class="", fontsize=12, label=utter_cloth_recommend];
+14 [class="", fontsize=12, label=height_weight_form];
+15 [class="", fontsize=12, label=utter_order_info];
+17 [class="", fontsize=12, label=utter_child_start_ask_age];
+18 [class="", fontsize=12, label=utter_child_ask_brand];
+19 [class="", fontsize=12, label=utter_child_ask_certain_brand];
+20 [class="", fontsize=12, label=utter_child_introduce_product];
+21 [class="", fontsize=12, label=utter_child_ask_other_question];
+22 [class="", fontsize=12, label=utter_goodbye];
+30 [class=intent, fillcolor=lightblue, label="你好", shape=rect, style=filled];
+31 [class=intent, fillcolor=lightblue, label="你好,我想咨询一下尿不湿", shape=rect, style=filled];
+32 [class=intent, fillcolor=lightblue, label=hello, shape=rect, style=filled];
+33 [class=intent, fillcolor=lightblue, label="这款衣服有货吗", shape=rect, style=filled];
+34 [class=intent, fillcolor=lightblue, label="我要M码的", shape=rect, style=filled];
+35 [class=intent, fillcolor=lightblue, label="我也不清楚自己什么码的", shape=rect, style=filled];
+36 [class=intent, fillcolor=lightblue, label="哪个快递啊", shape=rect, style=filled];
+37 [class=intent, fillcolor=lightblue, label="用申通吧", shape=rect, style=filled];
+38 [class=intent, fillcolor=lightblue, label=bye, shape=rect, style=filled];
+39 [class=intent, fillcolor=lightblue, label="身高160体重120", shape=rect, style=filled];
+40 [class=intent, fillcolor=lightblue, label="身高1米8，体重160斤", shape=rect, style=filled];
+41 [class=intent, fillcolor=lightblue, label="好的，我拍好了，你们发什么快递", shape=rect, style=filled];
+42 [class=intent, fillcolor=lightblue, label=goodbye, shape=rect, style=filled];
+43 [class=intent, fillcolor=lightblue, label="2岁", shape=rect, style=filled];
+44 [class=intent, fillcolor=lightblue, label="/child_include_some", shape=rect, style=filled];
+45 [class=intent, fillcolor=lightblue, label="我不想要国内的", shape=rect, style=filled];
+46 [class=intent, fillcolor=lightblue, label="/child_introduce", shape=rect, style=filled];
+47 [class=intent, fillcolor=lightblue, label="/child_choose_taocan", shape=rect, style=filled];
+48 [class=intent, fillcolor=lightblue, label="/child_ok", shape=rect, style=filled];
+0 -> 30  [class="", key=0];
+0 -> 31  [class="", key=0];
+0 -> 32  [class="", key=0];
+1 -> "-1"  [class="", key=NONE, label=""];
+1 -> 33  [class="", key=0];
+2 -> 34  [class="", key=0];
+2 -> 35  [class="", key=0];
+3 -> 36  [class="", key=0];
+4 -> 37  [class="", key=0];
+5 -> 38  [class="", key=0];
+6 -> "-1"  [class="", key=NONE, label=""];
+6 -> 39  [class="", key=0];
+9 -> 40  [class="", key=0];
+10 -> 41  [class="", key=0];
+14 -> 15  [class="", key=NONE, label=""];
+15 -> "-1"  [class="", key=NONE, label=""];
+15 -> 42  [class="", key=0];
+17 -> 43  [class="", key=0];
+18 -> 44  [class="", key=0];
+18 -> 45  [class="", key=0];
+19 -> 46  [class="", key=0];
+20 -> 47  [class="", key=0];
+21 -> 48  [class="", key=0];
+22 -> "-1"  [class="", key=NONE, label=""];
+30 -> 1  [class="", key=0];
+31 -> 17  [class="", key=0];
+32 -> "-1"  [class="", key=0];
+33 -> 2  [class="", key=0];
+34 -> 3  [class="", key=0];
+35 -> 9  [class="", key=0];
+36 -> 4  [class="", key=0];
+37 -> 5  [class="", key=0];
+38 -> 6  [class="", key=0];
+39 -> 14  [class="", key=0];
+40 -> 10  [class="", key=0];
+41 -> 4  [class="", key=0];
+42 -> 15  [class="", key=0];
+43 -> 18  [class="", key=0];
+44 -> 19  [class="", key=0];
+45 -> 19  [class="", key=0];
+46 -> 20  [class="", key=0];
+47 -> 21  [class="", key=0];
+48 -> 22  [class="", key=0];
+}
+`;
+    drawGraph(graph);
+  } else {
+    serveGraph();
+  }
+
+
+</script>
+</body>
+</html>
