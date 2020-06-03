@@ -1,23 +1,28 @@
 # -*- coding: utf-8 -*-
 
-'''
+"""
 @Author  :   Xu
- 
-@Software:   PyCharm
- 
-@File    :   time_utils.py
- 
-@Time    :   2020-01-15 10:53
- 
-@Desc    :   时间解析，这里调用time_convert包
- 
-'''
 
-import time_convert as tv
+@Software:   PyCharm
+
+@File    :   time_utils.py
+
+@Time    :   2020-01-15 10:53
+
+@Desc    :   时间解析，这里调用time_convert包
+
+            pip install time_convert
+
+"""
+import datetime
+import logging
 
 from time_convert import TimeNormalizer
 
+logger = logging.getLogger(__name__)
+
 tc = TimeNormalizer()
+
 
 def get_time_unit(msg):
     '''
@@ -27,5 +32,11 @@ def get_time_unit(msg):
     '''
 
     res = tc.parse(msg)
+    date_unit = res['date'][:10]
+    data = datetime.datetime.strptime(date_unit, '%Y-%m-%d').date()
+    return data
 
-    return res
+
+if __name__ == '__main__':
+    msg = '明天'
+    get_time_unit(msg)
