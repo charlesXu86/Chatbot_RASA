@@ -1,0 +1,91 @@
+intents:
+- greet:
+    triggers: utter_greet
+- goodbye:
+    triggers: utter_goodbye
+- confirm
+- deny
+- order
+- thanks
+- inform_size
+- unknown_intent
+- ask_for_disease_symptom
+- ask_for_symptom_disease
+- ask_for_disease_cause
+- ask_for_disease_acompany
+- ask_for_disease_noteat
+- ask_for_disease_doeat
+- ask_for_food_not_disease
+- ask_for_food_do_disease
+- ask_for_disease_drug
+- ask_for_drug_disease
+- ask_for_disease_check
+- ask_for_check_disease
+- ask_for_disease_prevent
+- ask_for_disease_lasttime
+- ask_for_disease_cureway
+- ask_for_disease_cureprob
+- ask_for_easyget
+- ask_for_disease_desc
+
+actions:
+- utter_greet
+- utter_ask_for_what
+- utter_affirm
+- utter_change_what
+- utter_goodbye
+- utter_charge
+- utter_default # action_default_fallback自动返回的就是这个动作，可以改写
+- search_medicaldb
+- utter_reply_disease_symptom
+
+entities:
+  - type
+  - size
+  - Check
+  - Department
+  - Disease
+  - Drug
+  - Food
+  - Producer
+  - Symptom
+
+slots:
+  type:
+    type: text
+  size:
+    type: text
+  Disease:
+    type: text
+
+templates:
+  utter_greet:
+  - text: "你好"
+
+  utter_ask_for_what:
+  - text: "您想询问那些问题？"
+
+  utter_ask_size:
+  - text: "想要什么规格的呢？"
+
+  utter_affirm:
+  - text: "确认下这些对吗"
+
+  utter_change_what:
+  - text: "那么想要换点什么呢？"
+
+  utter_goodbye:
+  - text: "再见~祝您健康"
+
+  utter_default:
+  - text: "听不太懂你在说啥呢，我们重新来一遍"
+
+  utter_charge:
+  - text: ""
+
+  utter_reply_disease_symptom:
+  - text: "测试返回"
+
+session_config:
+  session_expiration_time: 60  # value in minutes
+  carry_over_slots_to_new_session: true

@@ -13,6 +13,7 @@
              2、重写name和run
 
              3、时间解析
+             4、
 
 '''
 
@@ -47,18 +48,9 @@ from rasa_sdk.knowledge_base.storage import KnowledgeBase
 
 from utils.time_utils import get_time_unit  # 时间解析
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 basedir = str(pathlib.Path(os.path.abspath(__file__)).parent.parent)
-
-
-def get_tuling_response(msg):
-    # 替换成自己的key
-    key = "xxx"
-    api = 'http://www.tuling123.com/openapi/api?key={}&info={}'.format(
-        key, msg)
-    return requests.get(api).json()
 
 
 class ActionAskProblem(Action):
@@ -127,6 +119,7 @@ class ActionDefaultFallback(Action):
 class HeightWeightForm(FormAction):
     """Example of a custom form action"""
 
+    logger.info('Doing HeightWeightForm')
     def name(self) -> Text:
         """Unique identifier of the form"""
 
@@ -177,7 +170,7 @@ class HeightWeightForm(FormAction):
 class ActionMyKB(ActionQueryKnowledgeBase):
 
     def __init__(self):
-        knowledge_base = InMemoryKnowledgeBase(basedir + '/data/knowledge_base_data.json')
+        knowledge_base = InMemoryKnowledgeBase(basedir + '/data.back/knowledge_base_data.json')
         knowledge_base.set_representation_function_of_object(
             "hotel", lambda obj: obj["name"] + " (" + obj["city"] + ")"
         )

@@ -9,7 +9,8 @@ pipeline:
     analyzer: "char_wb"
     min_ngram: 1
     max_ngram: 4
-  - name: DIETClassifier     # Dual Intent and Entity Transformer
+#  - name: "chatbot_nlu.classifiers.diet_classifier.DIETClassifier"     # Dual Intent and Entity Transformer
+  - name: DIETClassifier
     epochs: 100
   - name: EntitySynonymMapper
   - name: ResponseSelector

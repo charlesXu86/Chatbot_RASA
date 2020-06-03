@@ -160,8 +160,18 @@
                 "sender": "000001",
                 "message": "你好"
               }
+        返回参数：
+        [
+            {
+                "recipient_id": "202005210002",
+                "text": "您好，我是智能助手小笨，有什么可以帮您的？"
+            }
+        ]
 
-    b、 button接口
+
+    d、 button接口
+
+    e、检索story
 
 
 四、Update News
