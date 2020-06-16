@@ -28,16 +28,16 @@ entities:
 - child_brand
 - child_exclude_brand
 slots:
-  child_age:
-    type: unfeaturized
-  child_brand:
-    type: unfeaturized
-  child_exclude_brand:
-    type: unfeaturized
+  time:
+    type: text
+  phone_number:
+    type: text
+  address:
+    type: text
   child_product:
     type: unfeaturized
   delivery:
-    type: unfeaturized
+    type: text
   height:
     type: unfeaturized
   size:
@@ -82,6 +82,7 @@ responses:
   utter_child_ask_other_question:
   - text: 请问还有什么其他需要帮助您的吗?
   - text: 请问还有其他问题吗?
+
 actions:
 - utter_ask_size
 - utter_inform_send_delivery
@@ -98,3 +99,6 @@ actions:
 - utter_child_introduce_product
 - utter_child_ask_other_question
 - height_weight_form
+
+forms:
+- case_form

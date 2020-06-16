@@ -1,0 +1,107 @@
+intents:
+  - greet
+  - WDZH
+    triggers: action_ask_count
+  - inform_height_weight:
+      use_entities: []
+  - inform_size
+  - inform_unknown_size
+  - inform_ask_delivery
+  - inform_choose_delivery
+  - confirm
+  - deny
+  - query_knowledge_base
+  - thanks
+  - goodbye
+
+entities:
+  - height
+  - weight
+  - size
+  - delivery
+  - child_product
+  - child_age
+  - child_brand
+  - child_exclude_brand
+
+
+slots:
+  time:
+    type: unfeaturized
+  address:
+    type: unfeaturized
+  book:
+    type: unfeaturized
+  company:
+    type: unfeaturized
+  delivery:
+    type: unfeaturized
+  movie:
+    type: unfeaturized
+  organization:
+    type: unfeaturized
+  game:
+    type: unfeaturized
+
+responses:
+  utter_greet:
+    - text: 您好,我是智能助手小笨，有什么可以帮您的？
+    - text: 您好，我是小笨，很高兴能帮到您
+  utter_ask_size:
+    - text: 有货的亲,请问您要什么型号的？
+    - text: 有货的亲,请问您穿多大尺码的？
+  utter_inform_send_delivery:
+    - text: 好的，下单后今天下班前会给您发货的
+  utter_ask_height_weight:
+    - text: 好的,请问您身高体重是多少
+    - text: 好的,请问您身高体重多少呢？可以给您推荐合适的尺码
+    - text: 好的,请问您什么体型？
+  utter_cloth_recommend:
+    - text: 好的，身高{height}体重{weight}推荐M码的衣服
+    - text: 好的亲，身高{height}体重{weight}推荐M码的
+  utter_default_delivery:
+    - text: 默认是申通，你想换别的快递也可以改的
+  utter_modify_delivery:
+    - text: 好的，已经改成{delivery}快递了
+  utter_order_info:
+    - text: 您的订单信息如下:身高{height},体重{weight},尺码{size},快递{delivery},欢迎下次再来
+  utter_goodbye:
+    - text: 欢迎下次再来
+    - text: Bye
+  utter_child_start_ask_age:
+    - text: 好的,您的孩子多大了
+  utter_child_ask_brand:
+    - text: 好的,您对品牌有要求吗
+  utter_child_ask_certain_brand:
+    - text: 日本花王可以吗
+    - text: 帮宝适可以吗
+  utter_child_introduce_product:
+    - text: 套餐一。XXL共五片，总价300。 套餐二，XXL供五片，总价350。 套餐三。小于85厘米的。共100片，总价300
+  utter_child_ask_other_question:
+    - text: 请问还有什么其他需要帮助您的吗?
+    - text: 请问还有其他问题吗?
+
+actions:
+  - utter_ask_size
+  - utter_inform_send_delivery
+  - utter_ask_height_weight
+  - utter_cloth_recommend
+  - utter_default_delivery
+  - utter_modify_delivery
+  - utter_order_info
+  - utter_goodbye
+  - utter_greet
+  - utter_child_start_ask_age
+  - utter_child_ask_brand
+  - utter_child_ask_certain_brand
+  - utter_child_introduce_product
+  - utter_child_ask_other_question
+  - action_ask_problem
+  - action_query_knowledge_base
+
+forms:
+  - height_weight_form
+
+session_config:
+  session_expiration_time: 60  # value in minutes
+  carry_over_slots_to_new_session: false

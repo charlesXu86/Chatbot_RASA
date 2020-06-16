@@ -25,9 +25,13 @@ import requests
 from typing import Any, Text, Dict, List, Union
 
 from rasa_sdk import Action
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.interfaces import Tracker
+
+from rasa_sdk.forms import FormAction, REQUESTED_SLOT
+
+from service.FAQ import get_qa
 
 from rasa_sdk.knowledge_base.utils import (
     SLOT_OBJECT_TYPE,
@@ -186,6 +190,12 @@ class ActionReportWeather(Action):
     def name(self) -> Text:
         return "action_report_weather"
 
+    @staticmethod
+    def required_slots(tracker):
+        # type: () -> List[Text]
+        """A list of required slots that the form has to fill"""
+        return ["address", "date-time"]
+
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
@@ -205,4 +215,92 @@ class ActionReportWeather(Action):
             print('date_time', date_time)
             print('date_time_number', date_time_number)
             weather_data = get_text_weather_date(address, date_time, date_time_number)  # 调用天气API
-            return [SlotSet("matches", "{}".format(weather_data))]
+
+        return [SlotSet("matches", "{}".format(weather_data))]
+
+
+class ActionUnknowIntent(Action):
+    """
+    处理未知意图，调用FAQ
+    """
+    def name(self):
+        return 'action_unknow_intent'
+
+    def run(selfs, dispatcher: CollectingDispatcher,
+                   tracker: Tracker,
+                   domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        text = tracker.latest_message.get('text')
+        qa_message = get_qa(text)
+
+        if qa_message != "未找到答案":
+            dispatcher.utter_message("{}".format(qa_message))
+        else:
+            message = get_response(text)
+            if message['code'] == 100000 or message['code'] == 200000:
+                dispatcher.utter_message("{}".format(message['text']))
+            else:
+                dispatcher.utter_template('utter_default', tracker, silent_fail=True)
+        return []
+
+class CaseForm(FormAction):
+    """A custom form action"""
+
+    def name(self):
+        # type: () -> Text
+        """Unique identifier of the form"""
+        return "case_form"
+
+    @staticmethod
+    def required_slots(tracker):
+        # type: () -> List[Text]
+        """A list of required slots that the form has to fill"""
+        return ["case", "place", "day"]
+
+    def slot_mappings(self):
+        return {"case": self.from_entity(entity="case", not_intent="unknown_intent"),
+                "place": [self.from_entity(entity="place"),
+                          self.from_text()],
+                "day": [self.from_entity(entity="day"),
+                        self.from_text()]
+                }
+
+    # # 无数据验证可省略
+    # def validate(self,
+    #              dispatcher: CollectingDispatcher,
+    #              tracker: Tracker,
+    #              domain: Dict[Text, Any]) -> List[Dict]:
+    #     """Validate extracted requested slot
+    #         else reject the execution of the form action
+    #     """
+    #     # extract other slots that were not requested
+    #     # but set by corresponding entity
+    #     slot_values = self.extract_other_slots(dispatcher, tracker, domain)
+    #
+    #     # extract requested slot
+    #     slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
+    #     if slot_to_fill:
+    #         slot_values.update(self.extract_requested_slot(dispatcher,
+    #                                                        tracker, domain))
+    #         if not slot_values:
+    #             # reject form action execution
+    #             # if some slot was requested but nothing was extracted
+    #             # it will allow other policies to predict another action
+    #             raise ActionExecutionRejection(self.name(),
+    #                                            "Failed to validate slot {0} "
+    #                                            "with action {1}"
+    #                                            "".format(slot_to_fill,
+    #                                                      self.name()))
+    #     return [SlotSet(slot, value) for slot, value in slot_values.items()]
+
+    def submit(self, dispatcher, tracker, domain):
+        # type: (CollectingDispatcher, Tracker, Dict[Text, Any]) -> List[Dict]
+        """Define what the form has to do
+            after all required slots are filled"""
+        # utter submit template
+        dispatcher.utter_template('utter_search_template', tracker)
+        dispatcher.utter_message("{},在{}发生一起性质恶劣的{},引起全市人民的高度关注，以下是详细信息："
+                                 .format(tracker.get_slot("day"), tracker.get_slot("place"), tracker.get_slot("case")))
+        return [AllSlotsReset()]
+
+
+
