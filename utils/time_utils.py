@@ -34,9 +34,10 @@ def get_time_unit(msg):
     res = tc.parse(msg)
     date_unit = res['date'][:10]
     data = datetime.datetime.strptime(date_unit, '%Y-%m-%d').date()
+    print(res)
     return data
 
 
 if __name__ == '__main__':
-    msg = '明天'
+    msg = '明天上午，沈海高速全线封停'
     get_time_unit(msg)

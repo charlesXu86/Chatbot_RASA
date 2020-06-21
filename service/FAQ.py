@@ -13,13 +13,13 @@
  
 """
 
-import requests
-import os
-import pathlib
 import json
 import logging
 
+import requests
+
 logger = logging.getLogger(__name__)
+
 
 def get_qa(msg):
     """
@@ -34,15 +34,15 @@ def get_qa(msg):
     }
     post_data = json.dumps(data)
     response = requests.post(url=url, data=post_data)
-    logger.info('statusCode is {}'.format({response.status_code}))
+    logger.info('statusCode is {}'.format(response.status_code))
 
     if response.status_code == 200:
         anwser = json.loads(list({response.text})[0])['result']['anwser']
     else:
-        anwser = ''
+        anwser = '没有答案'
 
     return anwser
 
 if __name__ == '__main__':
-    msg = '你好'
+    msg = '一万'
     get_qa(msg)

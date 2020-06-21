@@ -20,7 +20,6 @@
 import pathlib
 import os
 import logging
-import requests
 
 from typing import Any, Text, Dict, List, Union
 
@@ -229,13 +228,13 @@ class ActionUnknowIntent(Action):
     def run(selfs, dispatcher: CollectingDispatcher,
                    tracker: Tracker,
                    domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        text = tracker.latest_message.get('text')
+        text = tracker.latest_message.get('text')  # 用户说的话
         qa_message = get_qa(text)
 
         if qa_message != "未找到答案":
             dispatcher.utter_message("{}".format(qa_message))
         else:
-            message = get_response(text)
+            message = get_qa(text)
             if message['code'] == 100000 or message['code'] == 200000:
                 dispatcher.utter_message("{}".format(message['text']))
             else:

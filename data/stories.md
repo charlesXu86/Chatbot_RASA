@@ -1,77 +1,143 @@
- ## cloth know size
- * greet
-     - utter_greet
- * cloth_start
-     - utter_ask_size
- * inform_size
-     - utter_inform_send_delivery
- * inform_ask_delivery
-     - utter_default_delivery
- * inform_choose_delivery
-     - utter_modify_delivery
- * goodbye
-     - utter_order_info
+## greet
+* greet
+  - utter_greet
 
- ## cloth change delivery
- * greet
-     - utter_greet
- * cloth_start
-     - utter_ask_size
- * inform_size
-     - utter_inform_send_delivery
- * inform_ask_delivery
-     - utter_default_delivery
- * inform_choose_delivery
-     - utter_modify_delivery
- * query_knowledge_base
-     - action_query_knowledge_base
- * goodbye
-     - utter_order_info
-     
- ## query knowledge base
- * greet
-     - utter_greet
- * cloth_start
-     - utter_ask_size
- * inform_size
-     - utter_inform_send_delivery
- * inform_ask_delivery
-     - utter_default_delivery
- * inform_choose_delivery
-     - utter_modify_delivery
- * query_knowledge_base
-     - action_query_knowledge_base
- * goodbye
-     - utter_order_info
+## simple path
+* weather_address_date-time{"address": "上海", "date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+
+## address > date-time path
+* weather_address{"address": "上海"}
+  - utter_ask_date-time
+* weather_date-time{"date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+
+## date-time > address path
+* weather_date-time{"date-time": "明天"}
+  - utter_ask_address
+* weather_address{"address": "上海"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+
+## Weather only path
+* weather
+  - utter_ask_date-time
+
+## Weather > address > date-time path
+* weather
+  - utter_ask_date-time
+* weather_address{"address": "上海"}
+  - utter_ask_date-time
+* weather_date-time{"date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+
+## greet > Weather > date-time > address path
+* greet
+  - utter_greet
+* weather
+  - utter_ask_date-time
+* weather_date-time{"date-time": "明天"}
+  - utter_ask_address
+* weather_address{"address": "上海"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+
+## greet > Weather > address > date-time path
+* greet
+  - utter_greet
+* weather
+  - utter_ask_date-time
+* weather_address{"address": "上海"}
+  - utter_ask_date-time
+* weather_date-time{"date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+
+## greet > Weather > address > date-time path
+* greet
+  - utter_greet
+* weather
+  - utter_ask_date-time
+* weather_date-time{"date-time": "明天"}
+  - utter_ask_address
+* weather_address{"address": "上海"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+  
+## with change address or date
+* weather_address_date-time{"address": "上海", "date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "北京"} OR weather_date-time{"date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "杭州"} OR weather_date-time{"date-time": "后天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "南京"} OR weather_date-time{"date-time": "大后天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+  
+## with change address or date
+* weather_address_date-time{"address": "上海", "date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "北京"} OR weather_date-time{"date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "杭州"} OR weather_date-time{"date-time": "后天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "南京"} OR weather_date-time{"date-time": "大后天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "杭州"} OR weather_date-time{"date-time": "后天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "南京"} OR weather_date-time{"date-time": "大后天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
  
- ## cloth unknown size
- * greet
-     - utter_greet
- * cloth_start
-     - utter_ask_size
- * inform_unknown_size
-     - utter_ask_height_weight
- * inform_height_weight
-     - height_weight_form 
-     - form{"name": "height_weight_form"} 
-     - form{"name": null}
-     - utter_cloth_recommend
- * inform_ask_delivery
-     - utter_default_delivery
- * inform_choose_delivery
-     - action_ask_problem
-     <!-- - utter_modify_delivery -->
- <!-- * goodbye   -->
- <!--   - utter_order_info  -->
+## with change address
+* weather_address_date-time{"address": "上海", "date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"address": "北京"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+  
+## with change date
+* weather_address_date-time{"address": "上海", "date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
+* weather_address{"date-time": "明天"}
+  - utter_working_on_it
+  - action_report_weather
+  - utter_report_weather
 
-<!--  form action临时先注释掉,后面配合自定义form action使用-->
- <!-- ## form action -->
- * cloth_start
-     - utter_ask_height_weight
- * inform_height_weight 
-     - height_weight_form 
-     - form{"name": "height_weight_form"} 
-     - form{"name": null}
-     - utter_order_info 
- * goodbye
-     - utter_order_info 
+## say goodbye
+* goodbye
+  - utter_goodbye
