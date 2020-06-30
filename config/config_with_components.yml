@@ -13,6 +13,17 @@ pipeline:
 - name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
 
 
+- name: "components.kashgari_intent_classifier.KashgariIntentClassifier"
+    bert_model_path: "/Users/gaoquan/Documents/work/bert_test/rasa-bert-finetune/chinese_wwm_ext_L-12_H-768_A-12"
+    use_cudnn_cell: True
+    sequence_length: 32
+
+- name: "components.kashgari_entity_extractor.KashgariEntityExtractor"
+    bert_model_path: "/Users/gaoquan/Documents/work/bert_test/rasa-bert-finetune/chinese_wwm_ext_L-12_H-768_A-12"
+    use_cudnn_cell: True
+    sequence_length: 32
+
+
 # Word Embedding
 - name: "chatbot_nlu.featurizers.bert_vectors_featurizer.BertVectorsFeaturizer"
   ip: "172.18.86.20"

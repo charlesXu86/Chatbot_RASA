@@ -11,3 +11,6 @@ tracker_store:
     username: ''
     password: ''
     auth_source: "cuishou_bot"
+
+
+# Tracker Store Redis
