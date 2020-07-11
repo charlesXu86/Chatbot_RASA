@@ -13,15 +13,15 @@ pipeline:
 - name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
 
 
-- name: "components.kashgari_intent_classifier.KashgariIntentClassifier"
-    bert_model_path: "/Users/gaoquan/Documents/work/bert_test/rasa-bert-finetune/chinese_wwm_ext_L-12_H-768_A-12"
-    use_cudnn_cell: True
-    sequence_length: 32
+#- name: "components.kashgari_intent_classifier.KashgariIntentClassifier"
+#    bert_model_path: "/Data/public/Bert/chinese_wwm_ext_L-12_H-768_A-12"
+#    use_cudnn_cell: True
+#    sequence_length: 32
 
-- name: "components.kashgari_entity_extractor.KashgariEntityExtractor"
-    bert_model_path: "/Users/gaoquan/Documents/work/bert_test/rasa-bert-finetune/chinese_wwm_ext_L-12_H-768_A-12"
-    use_cudnn_cell: True
-    sequence_length: 32
+#- name: "components.kashgari_entity_extractor.KashgariEntityExtractor"
+#    bert_model_path: "/Data/public/Bert/chinese_wwm_ext_L-12_H-768_A-12"
+#    use_cudnn_cell: True
+#    sequence_length: 32
 
 
 # Word Embedding
@@ -51,7 +51,7 @@ pipeline:
 
 policies:     # 对话策略 引入强化学习 DDQ -> DQN
 #  - name: "chatbot_dm.policy.attention_policy.AttentionPolicy"
-  - name: TEDPolicy      # rasa 2.0 将 EmbeddingPolicy修改为TEDPolicy
+  - name: EmbeddingPolicy      # rasa 2.0 将 EmbeddingPolicy修改为TEDPolicy
 #  - name: KerasPolicy
     epochs: 2
     featurizer:
@@ -73,8 +73,8 @@ policies:     # 对话策略 引入强化学习 DDQ -> DQN
 
   - name: FallbackPolicy
     fallback_action_name: "action_default_fallback"
-    nlu_threshold: 0
-    core_threshold: 0
+    nlu_threshold: 0.3
+    core_threshold: 0.3
 
 #  - name: TwoStageFallbackPolicy
 #    nlu_threshold: 0.5

@@ -22,7 +22,7 @@ policies:
   - name: MemoizationPolicy
   - name: TEDPolicy          # Transformer Embedding Dialogue  之前版本的EmbeddingPolicy
     max_history: 5
-    epochs: 100
+    epochs: 20
   - name: MappingPolicy
   - name: FormPolicy
 
