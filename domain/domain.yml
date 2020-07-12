@@ -2,9 +2,7 @@ intents:
   - greet
   - goodbye
   - weather
-  - weather_address_date-time
-  - weather_address
-  - weather_date-time
+  - weather_info
 
 slots:
   address:
@@ -30,6 +28,7 @@ actions:
 responses:
   utter_greet:
     - text: "你好，我是智能助手小笨，请说出需要提供天气预测服务的地点和时间"
+    - text: "您好，我是小笨，有什么可以帮您的？"
 
   utter_working_on_it:
     - text: "正在查询中，请稍后 ..."
@@ -47,7 +46,7 @@ responses:
     - text: "{matches}"
 
   utter_default:
-    - text: "系统不明白您说的话"
+    - text: "小笨不明白您说的话"
 
 session_config:
   session_expiration_time: 60  # value in minutes

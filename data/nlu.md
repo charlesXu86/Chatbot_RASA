@@ -14,6 +14,8 @@
 - 拜
 - 退出
 - 结束
+- 好的，再见
+- bye bye
 
 ## intent:weather
 - 用着摄氏度显示天气
@@ -31,7 +33,7 @@
 - 天气会很温和吗
 - 为什么天气那么寒冷
 
-## intent:weather_address
+## intent:weather_info
 - 告诉我在[广州](address)怎么样
 - 告诉我在[广州](address)
 - 在[辽宁](address)呢
@@ -58,8 +60,7 @@
 - [首都](address)的天气怎么样
 - [魔都](address)的天气
 - [魔都](address)的天气怎么样
-
-## intent:weather_address_date-time
+- [杭州](address)天气
 - 我要[上海](address)[明天](date-time)的天气
 - 我要[上海](address)[后天](date-time)的天气
 - [上海](address)[明天](date-time)的天气
@@ -102,9 +103,7 @@
 - [魔都](address)[下午](date-time)的天气
 - [首都](address)[明天](date-time)的天气怎么样
 - [魔都](address)[下午](date-time)的天气怎么样
-
-
-## intent:weather_date-time
+- [明天](date-time)上海(address)天气
 - [今天](date-time)台中天气如何
 - 你知道[现在](date-time)外面冷不冷
 - 怎么能[下个星期日](date-time)
@@ -143,6 +142,7 @@
 
 ## synonym:下个星期一
 - 下星期一
+- 下周一
 
 ## synonym:今天
 - 早上
