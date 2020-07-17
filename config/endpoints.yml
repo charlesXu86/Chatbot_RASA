@@ -31,4 +31,4 @@ tracker_store:
     db: "chatbot"
     username: 'admin'
     password: '123456'
-    auth_source: "chatbot_CN"
+    auth_source: "admin"
