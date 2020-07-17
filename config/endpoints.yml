@@ -29,6 +29,6 @@ tracker_store:
     type: mongod
     url: mongodb://47.103.73.160:27017/
     db: "chatbot"
-    username: 'admin'
+    username: 'chatbot'
     password: '123456'
     auth_source: "admin"
