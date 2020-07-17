@@ -23,8 +23,7 @@ action_endpoint:
 
 
 
-# Tracker Store Redis
-# 172.16.28.43
+# Tracker Store Redis  test
 
 tracker_store:
     type: mongod
