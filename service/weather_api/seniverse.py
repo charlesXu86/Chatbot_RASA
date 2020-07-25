@@ -63,7 +63,8 @@ class SeniverseWeatherAPI(WeatherAPIBase):
 if __name__ == "__main__":
     api_secret = "Sq6NfAburbGs9MGQb"
     sw = SeniverseWeatherAPI(api_secret)
-    data = datetime.datetime.strptime('2020-5-19', '%Y-%m-%d').date()
+    data = datetime.datetime.strptime('2020-7-23', '%Y-%m-%d').date()
     ss = datetime.datetime.now().date()
-    result = sw.get_text_by_city_and_day('上海', data)
+    print(ss)
+    result = sw.get_text_by_city_and_day('上海', ss)
     print(result)

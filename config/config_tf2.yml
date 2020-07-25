@@ -1,7 +1,7 @@
 language: "zh"
 
 pipeline:
-#  - name: WhitespaceTokenizer           #
+  - name: WhitespaceTokenizer           #
   - name: RegexFeaturizer
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer

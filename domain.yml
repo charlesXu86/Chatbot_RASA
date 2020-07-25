@@ -1,0 +1,51 @@
+intents:
+  - greet
+  - goodbye
+  - guashi
+  - car_info
+  - thanks
+  - unknown
+
+slots:
+  card:
+    type: text
+
+entities:
+  - card
+
+actions:
+  - utter_greet
+  - utter_guashi
+  - utter_thanks
+  - utter_guashi_card
+  - utter_guashi_info
+  - utter_goodbye
+
+responses:
+  utter_greet:
+    - text: "你好，我是智能助手小笨，有什么可以帮您的吗？"
+    - text: "您好，我是小笨，有什么可以帮您的？"
+
+  utter_guashi:
+    - text: "您是想办理挂失业务吗？信用卡挂失请输入信用卡挂失，借记卡挂失请输入借记卡挂失"
+
+  utter_guashi_card:
+    - text: "可以提供一下你的卡号信息吗？"
+    - text: "请给我提供一下正确的卡号信息"
+    - text: "你的卡号是多少呢？"
+
+  utter_guashi_info:
+    - text: "正在为您办理信用卡挂失"
+
+  utter_thanks:
+    - text: "请问还有什么需要帮助的吗？"
+
+  utter_goodbye:
+    - text: "再见！"
+
+  utter_unknown:
+    - text: "小笨不是明白您说的话"
+
+session_config:
+  session_expiration_time: 60  # value in minutes
+  carry_over_slots_to_new_session: false

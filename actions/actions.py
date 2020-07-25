@@ -30,6 +30,9 @@ from rasa_sdk.interfaces import Tracker
 
 from rasa_sdk.forms import FormAction, REQUESTED_SLOT
 
+from service.weather_api.seniverse import SeniverseWeatherAPI
+# from utils.time_utils import forecast_to_text
+
 from service.FAQ import get_qa
 
 from rasa_sdk.knowledge_base.utils import (
@@ -54,6 +57,9 @@ from utils.time_utils import get_time_unit  # 时间解析
 logger = logging.getLogger(__name__)
 
 basedir = str(pathlib.Path(os.path.abspath(__file__)).parent.parent)
+
+api_secret = "Sq6NfAburbGs9MGQb"
+sw = SeniverseWeatherAPI(api_secret)
 
 
 class ActionAskProblem(Action):
@@ -173,7 +179,7 @@ class HeightWeightForm(FormAction):
 class ActionMyKB(ActionQueryKnowledgeBase):
 
     def __init__(self):
-        knowledge_base = InMemoryKnowledgeBase(basedir + '/data.back/knowledge_base_data.json')
+        knowledge_base = InMemoryKnowledgeBase(basedir + '/data/knowledge_base_data.json')
         knowledge_base.set_representation_function_of_object(
             "hotel", lambda obj: obj["name"] + " (" + obj["city"] + ")"
         )
@@ -210,12 +216,22 @@ class ActionReportWeather(Action):
         elif date_time_number is None:
             return [SlotSet("matches", "暂不支持查询 {} 的天气".format([address, date_time]))]
         else:
-            print('address', address)
-            print('date_time', date_time)
-            print('date_time_number', date_time_number)
-            weather_data = get_text_weather_date(address, date_time, date_time_number)  # 调用天气API
+            condition = sw.get_weather_by_city_and_day(address, date_time_number)  # 调用天气API
+            weather_data = forecast_to_text(address, condition)
 
         return [SlotSet("matches", "{}".format(weather_data))]
+
+
+def forecast_to_text(address, condition):
+    msg_tpl = "{city} {date} 的天气情况为：{condition}；气温：{temp_low}-{temp_high} 度"
+    msg = msg_tpl.format(
+        city= address,
+        date=condition.date,
+        condition=condition.condition,
+        temp_low=condition.low_temperature,
+        temp_high=condition.high_temperature
+    )
+    return msg
 
 
 class ActionUnknowIntent(Action):

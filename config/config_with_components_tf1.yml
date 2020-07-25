@@ -5,12 +5,12 @@ pipeline:
 #- name: "chatbot_nlu.extractors.crf_entity_extractor.CRFEntityExtractor"
 
 # ner
-#- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
-- name: "JiebaPsegExtractor"
+- name: "chatbot_nlu.extractors.jieba_pseg_extractor.JiebaPsegExtractor"
+#- name: "JiebaPsegExtractor"
 #  part_of_speech: ["address", "name", "organization", "position", "time", "goverment", "book", "scene", "movie", "company"]
   part_of_speech: ["nr"]
 
-- name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
+#- name: "chatbot_nlu.extractors.bilstm_crf_entity_extractor.BilstmCRFEntityExtractor"
 
 
 #- name: "components.kashgari_intent_classifier.KashgariIntentClassifier"
@@ -25,17 +25,17 @@ pipeline:
 
 
 # Word Embedding
-- name: "chatbot_nlu.featurizers.bert_vectors_featurizer.BertVectorsFeaturizer"
-  ip: "172.18.86.20"
+#- name: "chatbot_nlu.featurizers.bert_vectors_featurizer.BertVectorsFeaturizer"
+#  ip: "172.18.86.20"
 #  ip: "172.16.19.74"
-  port: 5555
-  port_out: 5556
-  show_server_config: True
-  timeout: 10000
-  check_version: False
+#  port: 5555
+#  port_out: 5556
+#  show_server_config: True
+#  timeout: 10000
+#  check_version: False
 
 # Single intent
-- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
+#- name: "chatbot_nlu.classifiers.embedding_bert_intent_classifier.EmbeddingBertIntentClassifier"
 #- name: "chatbot_nlu.classifiers.embedding_bert_intent_estimator_classifier.EmbeddingBertIntentEstimatorClassifier"
 #- name: "chatbot_nlu.classifiers.keyword_intent_classifier.KeywordIntentClassifier"  # 关键词提取意图
 
