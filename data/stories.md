@@ -40,6 +40,59 @@
 * goodbye
   - utter_goodbye
   
+## 银行卡挂失_card
+* greet
+  - utter_greet
+* guashi{"card": "银行卡"}
+  - utter_guashi_info
+* car_info
+  - utter_guashi_info
+* thanks
+  - utter_thanks
+* goodbye
+  - utter_goodbye
+ 
+## 银行卡挂失_card
+* greet
+  - utter_greet
+* guashi{"card": "银行卡"}
+  - utter_guashi_info
+* unknown
+  - utter_unknown
+* car_info
+  - utter_guashi_info
+* thanks
+  - utter_thanks
+* goodbye
+  - utter_goodbye
+
+
+## 储蓄卡挂失_card
+* greet
+  - utter_greet
+* guashi{"card": "储蓄卡"}
+  - utter_guashi
+* car_info
+  - utter_guashi_info
+* thanks
+  - utter_thanks
+* goodbye
+  - utter_goodbye
+ 
+## 储蓄卡挂失_card
+* greet
+  - utter_greet
+* guashi{"card": "储蓄卡"}
+  - utter_guashi
+* unknown
+  - utter_unknown
+* car_info
+  - utter_guashi_info
+* thanks
+  - utter_thanks
+* goodbye
+  - utter_goodbye
+  
 ## 信用卡挂失_card
 * greet
   - utter_greet

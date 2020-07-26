@@ -35,7 +35,10 @@ responses:
     - text: "你的卡号是多少呢？"
 
   utter_guashi_info:
-    - text: "正在为您办理信用卡挂失"
+    - text: "正在为您办理{card}挂失"
+
+#  utter_guashi_yinhangka:
+#    - text: "正在为您办理银行卡挂失"
 
   utter_thanks:
     - text: "请问还有什么需要帮助的吗？"
