@@ -47,7 +47,7 @@ responses:
     - text: "再见！"
 
   utter_unknown:
-    - text: "小笨不是明白您说的话"
+    - text: "对不起，小笨不是很明白您说的话"
 
 session_config:
   session_expiration_time: 60  # value in minutes
