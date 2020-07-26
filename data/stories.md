@@ -53,6 +53,20 @@
   - utter_thanks
 * goodbye
   - utter_goodbye
+  
+## 信用卡挂失_card
+* greet
+  - utter_greet
+* guashi
+  - utter_guashi
+* unknown
+  - utter_unknown
+* car_info
+  - utter_guashi_info
+* greet
+  - utter_greet
+* goodbye
+  - utter_goodbye
 
 ## 信用卡挂失_card
 * greet
@@ -93,26 +107,13 @@
   - utter_greet
 * guashi
   - utter_guashi
-* unknown
-  - utter_guashi
 * car_info
   - utter_guashi_info
 * thanks
   - utter_thanks
 * goodbye
   - utter_goodbye
-
-## 信用卡挂失_card_with_unknown
-* guashi
-  - utter_guashi
-* unknown
-  - utter_guashi
-* car_info
-  - utter_guashi_info
-* thanks
-  - utter_thanks
-* goodbye
-  - utter_goodbye
+  
   
 ## 信用卡挂失_card_with_greet
 * greet
